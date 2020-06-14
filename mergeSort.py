@@ -25,6 +25,6 @@ def mergeSort(lst):
         return lst
 
     left, right = 0, len(lst)-1
-    mid = (right + left)//2 - left
+    mid = (right - left)//2 + left
 
     return merge(mergeSort(lst[:mid]), mergeSort(lst[mid:]))

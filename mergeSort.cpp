@@ -7,7 +7,7 @@ vector<int> merge(vector<int> nums1, vector<int> nums2) {
     int j = 0;
     vector<int> merged;
 
-    while ((i < nums1.size()) and (j < nums2.size())) {
+    while ((i < nums1.size()) && (j < nums2.size())) {
         if (nums1.at(i) < nums2.at(j)) {
             merged.push_back(nums1.at(i));
             i += 1;
