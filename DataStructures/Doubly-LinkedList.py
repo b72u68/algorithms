@@ -7,9 +7,8 @@ class LinkedList:
             self.next = next
 
     def __init__(self):
-        self.head = LinkedList.Node(None)
-        self.head.prior = self.head
-        self.head.next = self.head
+        self.head = self.cursor = LinkedList.Node(None)
+        self.head.prior = self.head.next = self.head
         self.count = 0
 
     def prepend(self, value):
@@ -23,6 +22,34 @@ class LinkedList:
         self.head.prior.next = n
         self.head.prior = n
         self.count += 1
+
+    def cursor_set(self, idx):
+        assert(idx < len(self))
+
+        n = self.head.next
+
+        for _ in range(idx):
+            n = n.next
+
+        self.cursor = n
+
+    def cursor_get(self, idx):
+        return self.cursor.val
+
+    def cursor_insert(self, value):
+        n = LinkedList.Node(value, prior=self.cursor, next=self.cursor.next)
+        self.cursor.next = n
+        self.cursor.next.prior = n
+        self.count += 1
+
+    def cursor_delete(self):
+        to_del = self.cursor
+        self.cursor = self.cursor.prior
+
+        to_del.next.prior = self.cursor
+        to_del.prior.next = to_del.next
+
+        self.count -= 1
 
     def __getitem__(self, idx):
         assert(idx < len(self))
