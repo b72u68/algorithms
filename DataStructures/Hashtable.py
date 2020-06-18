@@ -10,7 +10,7 @@ class Hashtable:
         self.buckets = [None] * n_buckets
 
     def __setitem__(self, key, val):
-        bucket_idx = key % len(self.buckets)
+        bucket_idx = hash(key) % len(self.buckets)
         b = self.buckets[bucket_idx]
         while b:
             if b.key == key:
@@ -21,7 +21,7 @@ class Hashtable:
             self.buckets[bucket_idx] = Hashtable.Node(key, val, next=None)
 
     def __getitem__(self, key):
-        bucket_idx = key % len(self.buckets)
+        bucket_idx = hash(key) % len(self.buckets)
         b = self.buckets[bucket_idx]
         while b:
             if b.key == key:
@@ -31,7 +31,7 @@ class Hashtable:
             raise KeyError()
 
     def __contains__(self, key):
-        bucket_idx = key % len(self.buckets)
+        bucket_idx = hash(key) % len(self.buckets)
         b = self.buckets[bucket_idx]
         while b:
             if b.key == key:
