@@ -6,6 +6,23 @@ class BSTree:
             self.left = left
             self.right = right
 
+        def rotate_right(self):
+            n = self.left
+            self.val, n.val = n.val, self.val
+            self.left, n.left, self.right, n.right = n.left, n.right, n, self.right
+
+        def rotate_left(self):
+            n = self.right
+            self.val, n.val = n.val, self.val
+            self.right, n.right, self.left, n.left = n.right, n.left, n, self.left
+
+        @staticmethod
+        def height(node):
+            if not node:
+                return 0
+            else:
+                return max(1+BSTree.Node.height(node.left), 1+BSTree.Node.height(node.right))
+
     def __init__(self):
         self.root = None
         self.size = 0
@@ -22,6 +39,26 @@ class BSTree:
                 return True
         return contains_rec(self.root, val)
 
+    @staticmethod
+    def rebalance(tree):
+        if BSTree.Node.height(tree.left) > BSTree.Node.height(tree.right):
+            if BSTree.Node.height(tree.left.left) > BSTree.Node.height(tree.left.right):
+                # left - left imbalance tree
+                tree.rotate_right()
+            else:
+                # left - right imbalance tree
+                tree.left.rotate_left()
+                tree.rotate_right()
+        else:
+            if BSTree.Node.height(tree.right.right) > BSTree.Node.height(tree.right.left):
+                # right - right imbalance tree
+                tree.rotate_left()
+            else:
+                # right - left imbalance tree
+                tree.right.rotate_right()
+                tree.rotate_left()
+
+
     def add(self, val):
         assert (val not in self)
         def add_rec(node):
@@ -31,6 +68,11 @@ class BSTree:
                 return BSTree.Node(node.val, left=add_rec(node.left), right=node.right)
             else:
                 return BSTree.Node(node.val, left=node.left, right=add_rec(node.right))
+
+            if abs(BSTree.Node.height(node.left) - BSTree.Node.height(node.right)) >= 2:
+                BSTree.rebalance(self.root)
+            return node
+
         self.root = add_rec(self.root)
         self.size += 1
 
@@ -39,10 +81,8 @@ class BSTree:
         def delitem_rec(node):
             if val < node.val:
                 node.left = delitem_rec(node.left)
-                return node
             elif val > node.val:
                 node.right = delitem_rec(node.right)
-                return node
             else:
                 if not node.left and not node.right:
                     return None
@@ -62,7 +102,10 @@ class BSTree:
                         t = n.right
                         n.right = t.left
                         node.val = t.val
-                    return node
+
+            if abs(BSTree.Node.height(node.left) - BSTree.Node.height(node.right)) >= 2:
+                BSTree.rebalance(self.root)
+            return node
 
         self.root = delitem_rec(self.root)
         self.size -= 1
