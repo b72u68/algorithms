@@ -6,7 +6,7 @@ int binarySearch(vector<int> nums, int target) {
     int left = 0, right = nums.size()-1;
 
     while (left <= right) {
-        int mid = (left + right)/2;
+        int mid = (right - left)/2 + left;
         if (nums.at(mid) == target) {
             return mid;
         } else if (nums.at(mid) < target) {
