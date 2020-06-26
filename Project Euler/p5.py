@@ -1,3 +1,4 @@
+# Smallest multiple
 def gcd(x, y):
     r = max(x, y) % min(x, y)
     if r == 0:
