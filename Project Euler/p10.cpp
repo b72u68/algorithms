@@ -1,6 +1,17 @@
+// Summation of primes
 #include <bits/stdc++.h>
 
 using namespace std;
+
+// using  check primes algorithm 
+bool checkPimes(long n) {
+    for (long i = 2; i < sqrt(n); i++) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
 
 // using Sieve of Eratosthenes
 vector<long> getPrimes(long limit) {
