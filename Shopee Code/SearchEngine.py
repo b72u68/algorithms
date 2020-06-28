@@ -33,6 +33,7 @@ def checkQuery(item, query):
 for i in range(len(testCases)):
     items = testCases[i]['items']
     queries = testCases[i]['queries']
+    print(f'Case {i+1}:')
     for query in queries:
         counter = 0
         for item in items:
