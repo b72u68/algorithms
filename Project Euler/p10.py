@@ -1,3 +1,4 @@
+# Summation of primes
 from math import sqrt
 
 # using check primes algorithm
