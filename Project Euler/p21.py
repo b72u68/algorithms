@@ -18,11 +18,11 @@ def isAmicable(n):
     return False
 
 def main():
-    sum = 0
+    result = 0
     for i in range(10000):
         if isAmicable(i):
-            sum += i
-    return sum
+            result += i
+    return result
 
 if __name__ == "__main__":
     print(main())
