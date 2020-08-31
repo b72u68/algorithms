@@ -1,5 +1,3 @@
-import sys
-
 def main(array):
     left = 0
     right = len(array) - 1
